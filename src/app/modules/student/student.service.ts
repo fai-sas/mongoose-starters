@@ -11,7 +11,13 @@ const getAllStudentsFromDB = async () => {
   return result
 }
 
+const getSingleStudentFromDB = async (_id: string) => {
+  const result = await StudentModel.findOne({ _id })
+  return result
+}
+
 export const StudentServices = {
   createStudentIntoDB,
   getAllStudentsFromDB,
+  getSingleStudentFromDB,
 }
