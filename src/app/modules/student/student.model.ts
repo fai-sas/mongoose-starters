@@ -75,6 +75,10 @@ const studentSchema = new Schema<Student>(
       required: [true, 'ID is required'],
       unique: true,
     },
+    password: {
+      type: String,
+      required: [true, 'password is required'],
+    },
     name: {
       type: userNameSchema,
       required: [true, 'Name is required'],
