@@ -142,11 +142,16 @@ const studentSchema = new Schema<TStudent, StudentModel>(
         message: '{VALUE} is not a valid active type',
       },
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     toJSON: {
       virtuals: true,
     },
+    timestamps: true,
   }
 )
 
@@ -158,7 +163,24 @@ studentSchema.pre('save', async function (next) {
   next()
 })
 
-studentSchema.post('save', function () {})
+studentSchema.post('save', function (doc, next) {
+  doc.password = ''
+  next()
+})
+
+// query middleware
+
+studentSchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } })
+  next()
+})
+
+studentSchema.pre('findOne', function (next) {
+  this.find({ isDeleted: { $ne: true } })
+  next()
+})
+
+// TODO: aggregate
 
 //creating a custom static method
 studentSchema.statics.isUserExists = async function (id: string) {
