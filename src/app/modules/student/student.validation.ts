@@ -56,7 +56,7 @@ const localGuardianSchema = z.object({
   }),
 })
 
-const createStudentValidationSchema = z.object({
+export const studentValidationSchema = z.object({
   id: z
     .string({
       required_error: 'ID is required',
@@ -64,10 +64,8 @@ const createStudentValidationSchema = z.object({
     .nonempty('ID is required'),
   password: z.string().max(20),
   name: userNameSchema,
-  gender: z.enum(['male', 'female', 'other'], {
-    errorMap: () => ({ message: 'Gender must be one of: male, female, other' }),
-  }),
-  dateOfBirth: z.date().optional(),
+  gender: z.enum(['male', 'female', 'other']),
+  dateOfBirth: z.string().optional(),
   email: z
     .string({
       required_error: 'Email is required',
@@ -98,6 +96,4 @@ const createStudentValidationSchema = z.object({
     .default('active'),
 })
 
-export const studentValidations = {
-  createStudentValidationSchema,
-}
+export default studentValidationSchema
