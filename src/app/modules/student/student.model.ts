@@ -6,6 +6,8 @@ import {
   TStudent,
   TUserName,
 } from './student.interface'
+import bcrypt from 'bcrypt'
+import config from '../../config'
 
 const userNameSchema = new Schema<TUserName>({
   firstName: {
@@ -147,6 +149,16 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     },
   }
 )
+
+studentSchema.pre('save', async function (next) {
+  this.password = await bcrypt.hash(
+    this.password,
+    Number(config.bcrypt_salt_rounds)
+  )
+  next()
+})
+
+studentSchema.post('save', function () {})
 
 //creating a custom static method
 studentSchema.statics.isUserExists = async function (id: string) {
