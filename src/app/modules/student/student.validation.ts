@@ -94,7 +94,7 @@ export const studentValidationSchema = z.object({
       errorMap: () => ({ message: 'isActive must be one of: active, blocked' }),
     })
     .default('active'),
-  isDeleted: z.boolean(),
+  isDeleted: z.boolean().default(false),
 })
 
 export default studentValidationSchema

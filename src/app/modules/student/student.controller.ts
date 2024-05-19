@@ -28,6 +28,7 @@ const getAllStudents = async (req: Request, res: Response) => {
     const result = await StudentServices.getAllStudentsFromDB()
 
     res.status(200).json({
+      totalResult: result.length,
       success: true,
       message: 'Students retrieved successfully',
       data: result,
